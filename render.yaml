@@ -1,0 +1,57 @@
+services:
+  # Managed PostgreSQL Database
+  - type: db
+    name: gs-associates-db
+    databaseName: postgres
+    user: postgres
+    plan: free
+
+  # Backend Web Service
+  - type: web
+    name: gs-associates-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: gs-associates-db
+          property: host
+      - key: DB_PORT
+        value: 5432
+      - key: DB_NAME
+        fromDatabase:
+          name: gs-associates-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: gs-associates-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: gs-associates-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Frontend Web Service
+  - type: web
+    name: gs-associates-frontend
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://gs-associates-backend.onrender.com

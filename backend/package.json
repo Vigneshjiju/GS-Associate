@@ -1,0 +1,22 @@
+{
+  "name": "gs-associates-backend",
+  "version": "1.0.0",
+  "description": "Backend API for GS Associates Event Management Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^9.0.1",
+    "pdfkit": "^0.19.1",
+    "pg": "^8.11.5",
+    "razorpay": "^2.9.6"
+  }
+}

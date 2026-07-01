@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS testimonials (
+  id SERIAL PRIMARY KEY,
+  client_name VARCHAR(100) NOT NULL,
+  event_type VARCHAR(100) NOT NULL,
+  review_text TEXT NOT NULL,
+  rating INTEGER DEFAULT 5,
+  event_date VARCHAR(50),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS inquiries (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(100),
+  event_type VARCHAR(100) NOT NULL,
+  tentative_date VARCHAR(50),
+  guest_count INTEGER,
+  message TEXT,
+  status VARCHAR(50) DEFAULT 'New',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

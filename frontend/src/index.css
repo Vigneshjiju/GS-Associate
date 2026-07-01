@@ -1,0 +1,294 @@
+/* Core variables and theme styles */
+:root {
+  /* Premium Traditional South Indian Palette */
+  --primary-maroon: #7A001E; /* Rich Kumkum Crimson */
+  --primary-maroon-dark: #4D0010;
+  --primary-maroon-light: #A31D3C;
+  --accent-gold: #D4AF37; /* Royal Temple Gold */
+  --accent-gold-light: #F3E5AB; /* Silk Gold */
+  --accent-gold-dark: #AA8C2C;
+  
+  --bg-cream: #FAF7F0; /* Warm Silk/Ivory */
+  --bg-cream-dark: #F3EFE0;
+  
+  --text-dark: #2A2421; /* Rich Charcoal with warm tint */
+  --text-muted: #6B625E;
+  --text-light: #FFFFFF;
+  
+  --glass-bg: rgba(250, 247, 240, 0.75);
+  --glass-border: rgba(212, 175, 55, 0.25);
+  --shadow-gold: rgba(212, 175, 55, 0.15);
+  
+  --font-title: 'Playfair Display', Georgia, serif;
+  --font-body: 'Outfit', sans-serif;
+  
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset and basic layouts */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  color: var(--primary-maroon-dark);
+  font-weight: 700;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-cream-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-maroon);
+  border: 2px solid var(--bg-cream-dark);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-maroon-light);
+}
+
+/* Utility classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Gold Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-maroon) 30%, var(--accent-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Traditional Border */
+.traditional-border {
+  position: relative;
+}
+.traditional-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--primary-maroon));
+  border-radius: 2px;
+}
+
+/* Glassmorphism Card style */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(122, 0, 30, 0.05), 0 2px 8px 0 var(--shadow-gold);
+  border-radius: 16px;
+  transition: var(--transition-smooth);
+}
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 12px 40px 0 rgba(122, 0, 30, 0.08), 0 4px 16px 0 rgba(212, 175, 55, 0.25);
+}
+
+/* Custom interactive buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--primary-maroon) 0%, var(--primary-maroon-dark) 100%);
+  color: var(--text-light);
+  border: 1px solid var(--primary-maroon-dark);
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 550;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(122, 0, 30, 0.2);
+  transition: var(--transition-smooth);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--primary-maroon-light) 0%, var(--primary-maroon) 100%);
+  box-shadow: 0 6px 20px rgba(122, 0, 30, 0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--primary-maroon-dark);
+  border: 2px solid var(--primary-maroon);
+  padding: 11px 26px;
+  font-size: 16px;
+  font-weight: 550;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+.btn-secondary:hover {
+  background: rgba(122, 0, 30, 0.05);
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+  color: var(--text-dark);
+  border: 1px solid var(--accent-gold-dark);
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+  transition: var(--transition-smooth);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+}
+
+/* Subtle glowing animation */
+@keyframes goldGlow {
+  0% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); }
+}
+
+.glow-gold {
+  animation: goldGlow 3s infinite alternate;
+}
+
+/* Animations */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navbar Responsive Classes (replacing Tailwind-like inline styles) */
+.desktop-nav {
+  display: none !important;
+}
+
+.mobile-trigger {
+  display: flex !important;
+}
+
+.book-btn {
+  display: none !important;
+}
+
+@media (min-width: 640px) {
+  .book-btn {
+    display: inline-flex !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: flex !important;
+  }
+  
+  .mobile-trigger {
+    display: none !important;
+  }
+}
+
+/* Professional Print Styles for Invoices */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
+  }
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 24px;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    background: white !important;
+    color: #000 !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* Typing indicator animation */
+@keyframes dotBlink {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.dot-blink {
+  animation: dotBlink 1.4s infinite both;
+}
+
+/* Event Submission page — step indicator responsive */
+.desktop-step-label {
+  display: none !important;
+}
+.mobile-step-icon {
+  display: inline !important;
+}
+
+@media (min-width: 640px) {
+  .desktop-step-label {
+    display: inline !important;
+  }
+  .mobile-step-icon {
+    display: none !important;
+  }
+}
+
+/* Spin animation for loaders */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
