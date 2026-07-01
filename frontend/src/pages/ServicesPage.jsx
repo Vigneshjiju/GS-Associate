@@ -4,11 +4,193 @@ import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import { ShieldAlert, Check } from 'lucide-react';
 
+const initialPackages = [
+  {
+    id: 1,
+    event_type_id: 1,
+    name: "Basic Wedding",
+    description: "Simple traditional wedding execution covering core rituals and setups.",
+    price_range: "₹1,00,000 - ₹5,00,000",
+    features: "Essential Mandap decor, Muhurtham planning assistance, Standard sound setup, Core ritual coordination"
+  },
+  {
+    id: 2,
+    event_type_id: 1,
+    name: "Premium Wedding",
+    description: "Elegant wedding celebrations with rich decorations and end-to-end support.",
+    price_range: "₹5,00,000 - ₹10,00,000",
+    features: "Elegant thematic floral mandap, Bridal makeup, Professional sound & light, Full catering management, Muhurtham consultation"
+  },
+  {
+    id: 3,
+    event_type_id: 1,
+    name: "Luxury Wedding",
+    description: "Grand majestic wedding experiences with top-tier details and custom hospitality.",
+    price_range: "₹10,00,000+",
+    features: "Bespoke grand entrance & designer mandap, Pre-wedding photoshoot, Live traditional & fusion music, Premium catering, Full hospitality & guest logistics"
+  },
+  {
+    id: 4,
+    event_type_id: 2,
+    name: "Basic Corporate",
+    description: "Clean, professional setup for seminars and mid-sized conferences.",
+    price_range: "₹1,50,000 - ₹3,00,000",
+    features: "Standard audio-visual gear, Stage & podium branding, Attendee registration support, Standard hi-tea"
+  },
+  {
+    id: 5,
+    event_type_id: 2,
+    name: "Premium Corporate",
+    description: "Polished brand activations, exhibitions, and executive gatherings.",
+    price_range: "₹3,00,000 - ₹6,00,000",
+    features: "Advanced LED backdrop, Multi-camera live stream, Customized registration portal, Multi-cuisine buffet"
+  },
+  {
+    id: 6,
+    event_type_id: 2,
+    name: "Luxury Corporate",
+    description: "Grand-scale product launches and VIP corporate galas.",
+    price_range: "₹6,00,000+",
+    features: "Bespoke stage designs, 4K projection mapping, Celebrity emcee, Premium corporate gifting, 5-star catering"
+  },
+  {
+    id: 7,
+    event_type_id: 4,
+    name: "Basic Ceremony",
+    description: "Essential setups for domestic poojas and lifecycle rituals.",
+    price_range: "₹30,000 - ₹60,000",
+    features: "Verified Purohit booking, Standard Puja kit & samagri, Basic home/venue decoration, Sattvic menu coordination"
+  },
+  {
+    id: 8,
+    event_type_id: 4,
+    name: "Premium Ceremony",
+    description: "Traditional ceremonies with complete ritual kits and guest setups.",
+    price_range: "₹60,000 - ₹1,50,000",
+    features: "Experienced Vedic Purohit team, Complete premium Puja kit, Vastu-compliant mandap, Traditional South Indian seating, Standard Sattvic buffet"
+  },
+  {
+    id: 9,
+    event_type_id: 4,
+    name: "Luxury Ceremony",
+    description: "Grand traditional ceremonies with elaborate Vedic rituals and grand catering.",
+    price_range: "₹1,50,000+",
+    features: "Senior Acharya & Vedic group, Grand floral & traditional themes, Custom ritual item arrangements, Premium traditional welcome, Grand organic Sattvic feast"
+  },
+  {
+    id: 10,
+    event_type_id: 5,
+    name: "Basic Final Rites",
+    description: "Essential coordination for Apara Kriya and funeral rites.",
+    price_range: "₹25,000 - ₹50,000",
+    features: "Verified Acharya booking, Core ritual samagri kit, Earthen pots & dharmo-kumbha, Assistance at cremation ground"
+  },
+  {
+    id: 11,
+    event_type_id: 5,
+    name: "Premium Final Rites",
+    description: "Comprehensive 10th-13th day Karumandhiram and remembrance services.",
+    price_range: "₹50,000 - ₹1,20,000",
+    features: "Senior Vedic Purohit panel, Complete Karumandhiram setup, Pinda danam & thirtham arrangements, Sattvic memorial meal coordination"
+  },
+  {
+    id: 12,
+    event_type_id: 5,
+    name: "Luxury Final Rites",
+    description: "Complete end-to-end Apara Kriya, holy Asthi Visarjan, and annual Shraddha coordination.",
+    price_range: "₹1,20,000+",
+    features: "Lead Acharya with assistant priests, Holy river Asthi Visarjan boat & rituals, Full memorial guest logistics, Annual Shraddha remembrance reminder setup"
+  },
+  {
+    id: 13,
+    event_type_id: 3,
+    name: "Basic Social",
+    description: "Simple traditional or modern execution covering core decorations and setups.",
+    price_range: "₹75,000 - ₹1,50,000",
+    features: "Standard theme decor, basic sound setup, stage coordination, guest management assistance"
+  },
+  {
+    id: 14,
+    event_type_id: 3,
+    name: "Premium Social",
+    description: "Beautiful celebrations with customized decorations and catering management.",
+    price_range: "₹1,80,000 - ₹3,50,000",
+    features: "Exquisite floral decoration, premium sound & stage lights, full catering management, professional photography & videography"
+  },
+  {
+    id: 15,
+    event_type_id: 3,
+    name: "Luxury Social",
+    description: "Grand celebrations with bespoke layouts, entertainment, and top-tier guest logistics.",
+    price_range: "₹3,50,000+",
+    features: "Bespoke designer themes, celebrity host/entertainment, multi-cuisine catering, cinematography & drone footage, full hospitality & guest logistics"
+  }
+];
+
+const initialAddons = [
+  {
+    id: 1,
+    name: "Standard South Indian Catering",
+    category: "catering",
+    description: "Traditional banana leaf service with 18 items.",
+    base_price: 450.00
+  },
+  {
+    id: 2,
+    name: "Premium Sattvic Feast",
+    category: "catering",
+    description: "Traditional pure vegetarian buffet with 26 items.",
+    base_price: 750.00
+  },
+  {
+    id: 3,
+    name: "Classic Floral Decor",
+    category: "decor",
+    description: "Traditional marigold and jasmine arrangements.",
+    base_price: 30000.00
+  },
+  {
+    id: 4,
+    name: "Grand Royal Mandap Decor",
+    category: "decor",
+    description: "Ornate temple-style backdrop decorations with fresh flowers.",
+    base_price: 95000.00
+  },
+  {
+    id: 5,
+    name: "Standard Photography",
+    category: "photography",
+    description: "Traditional photo & video coverage of key rituals.",
+    base_price: 25000.00
+  },
+  {
+    id: 6,
+    name: "Cinematic Candid Showcase",
+    category: "photography",
+    description: "Full DSLR coverage, cinematic video teaser, and high-res album.",
+    base_price: 65000.00
+  },
+  {
+    id: 7,
+    name: "Vedic Purohit Services",
+    category: "priest",
+    description: "Verified purohit booking and Muhurtham timing consultation.",
+    base_price: 10000.00
+  },
+  {
+    id: 8,
+    name: "Maha Homam Priest Group",
+    category: "priest",
+    description: "Lead Acharya with 4 assistant priests for elaborate homams.",
+    base_price: 28000.00
+  }
+];
+
 export default function ServicesPage() {
   const { t } = useLanguage();
-  const [packages, setPackages] = useState([]);
-  const [addons, setAddons] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [packages, setPackages] = useState(initialPackages);
+  const [addons, setAddons] = useState(initialAddons);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCatalogData();
@@ -20,12 +202,14 @@ export default function ServicesPage() {
         axios.get('/api/catalog/packages'),
         axios.get('/api/catalog/addons')
       ]);
-      setPackages(pkgRes.data);
-      setAddons(addonRes.data);
+      if (Array.isArray(pkgRes.data) && pkgRes.data.length > 0) {
+        setPackages(pkgRes.data);
+      }
+      if (Array.isArray(addonRes.data) && addonRes.data.length > 0) {
+        setAddons(addonRes.data);
+      }
     } catch (err) {
-      console.warn('Error fetching catalog data:', err);
-    } finally {
-      setLoading(false);
+      console.warn('Error fetching catalog data from API, using defaults');
     }
   };
 
@@ -41,7 +225,7 @@ export default function ServicesPage() {
   return (
     <div style={{ fontFamily: 'var(--font-body)', padding: '60px 0' }}>
       <div className="container">
-        
+
         {/* Title */}
         <div style={{ textAlign: 'center', marginBottom: '50px' }}>
           <h2 style={{ fontSize: '36px' }} className="traditional-border">Our Package Tiers</h2>
@@ -55,9 +239,9 @@ export default function ServicesPage() {
           <div style={{ textAlign: 'center', padding: '30px' }}>Loading packages catalog...</div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '50px' }}>
-            
+
             {/* Split by event category */}
-            {[...new Set(packages.map(p => p.event_type_id))].sort((a,b)=>a-b).map(catId => {
+            {[...new Set(packages.map(p => p.event_type_id))].sort((a, b) => a - b).map(catId => {
               const catPkgs = packages.filter(p => p.event_type_id === catId);
               if (catPkgs.length === 0) return null;
 
@@ -79,7 +263,7 @@ export default function ServicesPage() {
                         <div style={{ borderTop: '1px solid #eee', paddingTop: '12px', fontSize: '12px' }}>
                           <strong style={{ display: 'block', marginBottom: '6px' }}>Key features:</strong>
                           <ul style={{ paddingLeft: '14px', listStyleType: 'circle', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {pkg.features.split(',').map((f, i) => <li key={i}>{f.trim()}</li>)}
+                            {(pkg.features || '').split(',').map((f, i) => <li key={i}>{f.trim()}</li>)}
                           </ul>
                         </div>
                       </div>
