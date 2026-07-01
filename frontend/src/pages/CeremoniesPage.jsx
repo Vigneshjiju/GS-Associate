@@ -41,7 +41,32 @@ export default function CeremoniesPage() {
           </p>
         </div>
 
+        {/* Core Pillars / Standards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '50px' }}>
+          <div className="glass-card" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+              <BookOpen size={20} color="var(--primary-maroon)" />
+            </div>
+            <h4 style={{ fontSize: '16px', marginBottom: '8px', color: 'var(--primary-maroon-dark)', fontFamily: 'var(--font-title)' }}>Scriptural Fidelity</h4>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>Performed strictly as per Vedic scriptures and family traditions (Sampradaya).</p>
+          </div>
 
+          <div className="glass-card" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+              <Compass size={20} color="var(--primary-maroon)" />
+            </div>
+            <h4 style={{ fontSize: '16px', marginBottom: '8px', color: 'var(--primary-maroon-dark)', fontFamily: 'var(--font-title)' }}>Sattvic Cleanliness</h4>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>Utmost physical and spiritual purity maintained at every stage of the ritual.</p>
+          </div>
+
+          <div className="glass-card" style={{ padding: '24px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+              <Award size={20} color="var(--primary-maroon)" />
+            </div>
+            <h4 style={{ fontSize: '16px', marginBottom: '8px', color: 'var(--primary-maroon-dark)', fontFamily: 'var(--font-title)' }}>Verified Acharyas</h4>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>Vetted, experienced Vedic scholars and priests with proven credentials.</p>
+          </div>
+        </div>
 
         {/* Ceremonies List */}
         <h3 style={{ fontSize: '24px', marginBottom: '16px', borderBottom: '1px solid var(--accent-gold-light)', paddingBottom: '10px' }}>

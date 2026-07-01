@@ -7,18 +7,23 @@ import { ShieldAlert, Check } from 'lucide-react';
 export default function ServicesPage() {
   const { t } = useLanguage();
   const [packages, setPackages] = useState([]);
+  const [addons, setAddons] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPackages();
+    fetchCatalogData();
   }, []);
 
-  const fetchPackages = async () => {
+  const fetchCatalogData = async () => {
     try {
-      const res = await axios.get('/api/catalog/packages');
-      setPackages(res.data);
+      const [pkgRes, addonRes] = await Promise.all([
+        axios.get('/api/catalog/packages'),
+        axios.get('/api/catalog/addons')
+      ]);
+      setPackages(pkgRes.data);
+      setAddons(addonRes.data);
     } catch (err) {
-      console.warn('Error fetching packages');
+      console.warn('Error fetching catalog data:', err);
     } finally {
       setLoading(false);
     }
@@ -133,6 +138,61 @@ export default function ServicesPage() {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Customizable Add-ons */}
+        {!loading && addons.length > 0 && (
+          <div style={{ marginTop: '50px' }}>
+            <h3 style={{ fontSize: '24px', marginBottom: '20px', color: 'var(--primary-maroon-dark)', borderLeft: '4px solid var(--accent-gold)', paddingLeft: '12px' }}>
+              Customizable Event Add-ons
+            </h3>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '24px' }}>
+              Tailor any package tier with these traditional and logistical enhancements:
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
+              {addons.map(addon => (
+                <div className="glass-card" key={addon.id} style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderLeft: '3px solid var(--accent-gold)' }}>
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: '16px', color: 'var(--primary-maroon)' }}>{addon.name}</h4>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', margin: '4px 0 8px' }}>
+                      Category: {addon.category}
+                    </span>
+                    <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>{addon.description}</p>
+                  </div>
+                  <div style={{ marginTop: '12px', paddingTop: '8px', borderTop: '1px dotted rgba(0,0,0,0.1)', fontSize: '13px', fontWeight: '600', color: 'var(--text-dark)' }}>
+                    Base Cost: {addon.category === 'catering' ? `₹${addon.base_price}/plate` : `₹${parseFloat(addon.base_price).toLocaleString('en-IN')}`}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Trust & Guarantee Section */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '50px' }}>
+          <div className="glass-card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+            <div style={{ backgroundColor: 'rgba(212, 175, 55, 0.15)', padding: '10px', borderRadius: '50%', color: 'var(--primary-maroon)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Check size={20} />
+            </div>
+            <div>
+              <h4 style={{ fontSize: '16px', margin: '0 0 6px', color: 'var(--primary-maroon-dark)', fontFamily: 'var(--font-title)' }}>Transparent Pricing Guarantee</h4>
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>
+                All package tiers have clear price ranges with no hidden administrative fees or vendor markups. Custom alterations are calculated explicitly.
+              </p>
+            </div>
+          </div>
+
+          <div className="glass-card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+            <div style={{ backgroundColor: 'rgba(163, 29, 60, 0.15)', padding: '10px', borderRadius: '50%', color: 'var(--primary-maroon-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <ShieldAlert size={20} />
+            </div>
+            <div>
+              <h4 style={{ fontSize: '16px', margin: '0 0 6px', color: 'var(--primary-maroon-dark)', fontFamily: 'var(--font-title)' }}>Risk Mitigation & Contingencies</h4>
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.6' }}>
+                Every corporate event and wedding is covered by vetted local vendors with backup resource management (power, AV, decor) for peace of mind.
+              </p>
+            </div>
           </div>
         </div>
 
