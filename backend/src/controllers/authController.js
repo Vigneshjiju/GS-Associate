@@ -84,7 +84,7 @@ exports.getCurrentUser = async (req, res) => {
 
 exports.resetDb = async (req, res) => {
   try {
-    await db.query('DELETE FROM users');
+    await db.query('TRUNCATE TABLE users, event_types, packages, package_addons, ceremonies RESTART IDENTITY CASCADE;');
     
     // Instead of restarting, let's run the seed script directly to catch the error
     const fs = require('fs');
