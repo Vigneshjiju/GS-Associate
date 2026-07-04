@@ -1,13 +1,15 @@
 -- Seed default admin user (password is bcrypt hash of 'admin123')
 INSERT INTO users (name, email, password, role) VALUES 
-('GS Admin', 'admin@gsassociates.com', '$2a$10$S7DOIMlId9OISUXa5GTpU.rNDNOsS/HhN7Z3w0flxESPNjoH6CeSG', 'admin');
+('GS Admin', 'admin@gsassociates.com', '$2a$10$S7DOIMlId9OISUXa5GTpU.rNDNOsS/HhN7Z3w0flxESPNjoH6CeSG', 'admin')
+ON CONFLICT (email) DO NOTHING;
 
 -- Seed event types
-INSERT INTO event_types (name, slug, description) VALUES 
-('Weddings', 'weddings', 'Traditional South Indian Muhurthams, grand receptions, and customized destination weddings.'),
-('Corporate Events', 'corporate', 'Professional conferences, product launches, seminars, brand activations, and executive gatherings.'),
-('Social Events', 'social', 'Personal milestones including birthdays, anniversaries, baby showers, and family get-togethers.'),
-('Traditional Ceremonies', 'ceremonies', 'Lifecycle rituals, auspicious poojas, and homams performed by verified Vedic purohits.');
+INSERT INTO event_types (id, name, slug, description) VALUES 
+(1, 'Weddings', 'weddings', 'Traditional South Indian Muhurthams, grand receptions, and customized destination weddings.'),
+(2, 'Corporate Events', 'corporate', 'Professional conferences, product launches, seminars, brand activations, and executive gatherings.'),
+(3, 'Social Events', 'social', 'Personal milestones including birthdays, anniversaries, baby showers, and family get-togethers.'),
+(4, 'Traditional Ceremonies', 'ceremonies', 'Lifecycle rituals, auspicious poojas, and homams performed by verified Vedic purohits.')
+ON CONFLICT (id) DO NOTHING;
 
 -- Seed packages (Basic=1, Premium=2, Luxury=3 for each category)
 -- For Weddings
