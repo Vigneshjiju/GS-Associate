@@ -85,12 +85,19 @@ exports.getCurrentUser = async (req, res) => {
 exports.resetDb = async (req, res) => {
   try {
     await db.query('DELETE FROM users');
-    res.json({ message: 'Users cleared. Backend is restarting to properly seed all catalog data (packages, event types, etc.). Please wait 30 seconds and then log in again.' });
-    // Exit process to trigger Render to restart the server and run initDatabase()
-    setTimeout(() => {
-      console.log("Restarting server for seed...");
-      process.exit(0);
-    }, 1000);
+    
+    // Instead of restarting, let's run the seed script directly to catch the error
+    const fs = require('fs');
+    const path = require('path');
+    const seedPath = path.join(__dirname, '../database/seeds/seed_data.sql');
+    const sql = fs.readFileSync(seedPath, 'utf8');
+    
+    try {
+      await db.query(sql);
+      res.json({ message: 'Users cleared and seed_data.sql executed perfectly!' });
+    } catch (err) {
+      res.status(500).json({ error: 'seed_data.sql crashed!', details: err.message, stack: err.stack });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
