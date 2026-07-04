@@ -8,11 +8,9 @@ services:
   # Backend Web Service
   - type: web
     name: gs-associates-backend
-    env: node
+    env: docker
     plan: free
     rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
     envVars:
       - key: PORT
         value: 5000
