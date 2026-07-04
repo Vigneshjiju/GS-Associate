@@ -82,6 +82,20 @@ exports.getCurrentUser = async (req, res) => {
   }
 };
 
+exports.resetDb = async (req, res) => {
+  try {
+    await db.query('DELETE FROM users');
+    res.json({ message: 'Users cleared. Backend is restarting to properly seed all catalog data (packages, event types, etc.). Please wait 30 seconds and then log in again.' });
+    // Exit process to trigger Render to restart the server and run initDatabase()
+    setTimeout(() => {
+      console.log("Restarting server for seed...");
+      process.exit(0);
+    }, 1000);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.seedAdmin = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);

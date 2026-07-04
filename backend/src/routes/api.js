@@ -17,6 +17,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 router.post('/auth/register', authController.register);
 router.post('/auth/login', authController.login);
 router.get('/auth/seed-admin', authController.seedAdmin);
+router.get('/auth/reset-db', authController.resetDb);
 router.get('/auth/me', authMiddleware, authController.getCurrentUser);
 
 // Catalog routes (public)
