@@ -81,3 +81,44 @@ exports.getCurrentUser = async (req, res) => {
     res.status(500).json({ error: 'Server error fetching user details' });
   }
 };
+
+exports.seedAdmin = async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash('admin123', salt);
+    
+    // Ensure table exists (though migrations should have created it)
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'staff',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Try to insert admin user
+    const insertResult = await db.query(
+      "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO NOTHING RETURNING id",
+      ['GS Admin', 'admin@gsassociates.com', hashedPassword, 'admin']
+    );
+
+    if (insertResult.rows.length > 0) {
+      return res.json({ message: 'Admin user successfully created! You can now log in with email admin@gsassociates.com and password admin123.' });
+    }
+
+    // If already exists, update it to make sure it works
+    await db.query(
+      "UPDATE users SET password = $1, role = $2 WHERE email = $3",
+      [hashedPassword, 'admin', 'admin@gsassociates.com']
+    );
+
+    res.json({ message: 'Admin user already existed. Password has been reset/updated to admin123 successfully!' });
+  } catch (error) {
+    console.error('Seeding admin user failed:', error.message);
+    res.status(500).json({ error: 'Failed to seed admin user: ' + error.message });
+  }
+};
+
