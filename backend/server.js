@@ -33,6 +33,7 @@ app.get('/health', (req, res) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  require('fs').appendFileSync('error.log', `[${new Date().toISOString()}] ${req.method} ${req.url}\nBody: ${JSON.stringify(req.body)}\nError: ${err.stack}\n\n`);
   res.status(500).json({ error: err.message || 'Something broke on the server!' });
 });
 

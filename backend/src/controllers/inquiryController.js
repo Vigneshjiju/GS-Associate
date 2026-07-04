@@ -165,7 +165,8 @@ exports.convertInquiryToBooking = async (req, res) => {
       booking: joinedBooking
     });
   } catch (error) {
-    console.error('Convert inquiry to booking error:', error.message);
-    res.status(500).json({ error: 'Server error during inquiry conversion' });
+    console.error('Convert inquiry to booking error:', error.stack);
+    require('fs').appendFileSync('error.log', `[${new Date().toISOString()}] Convert Error\nBody: ${JSON.stringify(req.body)}\nError: ${error.stack}\n\n`);
+    res.status(500).json({ error: 'Server error during inquiry conversion', details: error.stack });
   }
 };
