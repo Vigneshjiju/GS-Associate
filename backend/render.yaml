@@ -1,7 +1,7 @@
 databases:
   - name: gs-associates-db
-    databaseName: postgres
-    user: postgres
+    databaseName: gs_associates
+    user: gs_associates_user
     plan: free
 
 services:
